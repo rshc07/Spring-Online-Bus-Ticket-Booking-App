@@ -85,8 +85,39 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
 - **URL**: ```/registration```
 - **Method**: ```POST```
 - **Request Body**:
-- ```{
+  ```{
     "name": "John Doe",
     "email": "john.doe@example.com",
     "password": "password123"
      }```
+  
+- **Response**:
+  - **Success**: Redirects to the login page.
+  - **Failure**: Returns validation errors.
+    
+#### User Login
+
+- **URL**: ```/login```
+- **Method**: ```POST```
+- **Request Body**:
+  ```{
+    "email": "john.doe@example.com",
+    "password": "password123"
+     }```
+- **Response**:
+  - **Success**: Redirects to the login page.
+  - **Failure**: Returns validation errors.
+ 
+#### Search Buses
+
+- **URL**: ```/dashboard```
+- **Method**: ```POST```
+- **Request Body**:
+  ```{
+    "from": "City A",
+    "to": "City B",
+    "filterDate": "2024-08-14"
+     }```
+- **Response**:
+  - **Success**: Redirects to the login page.
+  - **Failure**: Returns validation errors.
