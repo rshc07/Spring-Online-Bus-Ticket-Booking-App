@@ -85,11 +85,12 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
 - **URL**: ```/registration```
 - **Method**: ```POST```
 - **Request Body**:
-  ```{
+  ```JSON
+     {
     "name": "John Doe",
     "email": "john.doe@example.com",
     "password": "password123"
-     }```
+     } ```
   
 - **Response**:
   - **Success**: Redirects to the login page.
@@ -100,10 +101,11 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
 - **URL**: ```/login```
 - **Method**: ```POST```
 - **Request Body**:
-  ```{
+  ```JSON
+  {
     "email": "john.doe@example.com",
     "password": "password123"
-     }```
+  }```
 - **Response**:
   - **Success**: Redirects to the login page.
   - **Failure**: Returns validation errors.
@@ -113,7 +115,8 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
 - **URL**: ```/dashboard```
 - **Method**: ```POST```
 - **Request Body**:
-  ```{
+  ```JSON
+     {
     "from": "City A",
     "to": "City B",
     "filterDate": "2024-08-14"
