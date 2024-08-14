@@ -7,6 +7,8 @@ import com.guvi.busBooking.repository.BookingsRepository;
 import com.guvi.busBooking.repository.BusDataRepository;
 import com.guvi.busBooking.repository.UserRepository;
 import com.guvi.busBooking.service.DefaultUserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,6 +31,7 @@ import com.guvi.busBooking.model.User;
 
 @Controller
 @RequestMapping("/dashboard")
+@Tag(name = "Dashboard Controller", description = "Controller for managing dashboard operations")
 public class DashboardController {
 	
 	 private DefaultUserService userService;
@@ -53,6 +56,7 @@ public class DashboardController {
     }
 	
 	@GetMapping
+	@Operation(summary = "Display Dashboard", description = "Displays the user dashboard with user details")
     public String displayDashboard(Model model){
 		String user= returnUsername();
         model.addAttribute("userDetails", user);
@@ -60,6 +64,7 @@ public class DashboardController {
     }
 	
 	@PostMapping
+	@Operation(summary = "Filter Bus Data", description = "Filters bus data based on reservation details")
 	public String filterBusData( @ModelAttribute("reservation") ReservationDTO reservationDTO , Model model) {
 		List<BusData> busData = busDataRepository.findByToFromAndDate(reservationDTO.getTo(), reservationDTO.getFrom(), reservationDTO.getFilterDate());
 		
@@ -75,6 +80,7 @@ public class DashboardController {
 	    return "dashboard";
 	}
 	@GetMapping("/book/{id}")
+	@Operation(summary = "Book Page", description = "Displays the booking page for a specific bus")
 	public String bookPage(@PathVariable int id,Model model) {
 		Optional<BusData> busdata = busDataRepository.findById(id);
 		BookingsDTO bks = ObjectCreationHelper.createBookingsDTO(busdata.get());
@@ -87,6 +93,7 @@ public class DashboardController {
 	}
 	
 	@PostMapping("/booking")
+	@Operation(summary = "Final Booking", description = "Finalizes the booking and redirects to the user's bookings")
 	public String finalBooking(@ModelAttribute("record") BookingsDTO bookingDTO,Model model) {
 		SecurityContext securityContext = SecurityContextHolder.getContext();
         UserDetails user = (UserDetails) securityContext.getAuthentication().getPrincipal();

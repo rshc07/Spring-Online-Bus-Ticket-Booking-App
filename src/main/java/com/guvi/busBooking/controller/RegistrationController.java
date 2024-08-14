@@ -1,6 +1,8 @@
 package com.guvi.busBooking.controller;
 
 import com.guvi.busBooking.service.DefaultUserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,6 +13,7 @@ import com.guvi.busBooking.DTO.UserRegisteredDTO;
 
 @Controller
 @RequestMapping("/registration")
+@Tag(name = "Registration Controller", description = "Controller for managing user registration")
 public class RegistrationController {
 
 	 private DefaultUserService userService;
@@ -26,11 +29,13 @@ public class RegistrationController {
 	    }
 
 	    @GetMapping
+		@Operation(summary = "Show Registration Form", description = "Displays the registration form")
 	    public String showRegistrationForm() {
 	        return "register";
 	    }
 
 	    @PostMapping
+		@Operation(summary = "Register User Account", description = "Registers a new user account and redirects to the login page")
 	    public String registerUserAccount(@ModelAttribute("user") 
 	              UserRegisteredDTO registrationDto) {
 	        userService.save(registrationDto);

@@ -8,6 +8,8 @@ import java.util.Optional;
 import com.guvi.busBooking.repository.BookingsRepository;
 import com.guvi.busBooking.repository.UserRepository;
 import com.guvi.busBooking.service.DefaultUserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,6 +28,7 @@ import com.guvi.busBooking.model.User;
 
 @Controller
 @RequestMapping("/myBooking")
+@Tag(name = "My Booking Controller", description = "Controller for managing user bookings")
 public class MyBookingController {
 
 	private DefaultUserService userService;
@@ -46,6 +49,7 @@ public class MyBookingController {
 	    }
 	    
 		@GetMapping
+		@Operation(summary = "View Bookings", description = "Displays the user's bookings")
 		public String login(Model model) {
 			SecurityContext securityContext = SecurityContextHolder.getContext();
 	        UserDetails users = (UserDetails) securityContext.getAuthentication().getPrincipal();
@@ -63,6 +67,7 @@ public class MyBookingController {
 		}
 		
 		@GetMapping("/generate/{id}")
+		@Operation(summary = "Generate Booking", description = "Generates a booking and sends an email")
 		public String bookPage(@PathVariable int id,Model model) {
 			Optional<Bookings> busdata = bookingsRepository.findById(id);
 			 Optional<User> users =userRepository.findById(busdata.get().getUserId());
@@ -77,6 +82,7 @@ public class MyBookingController {
 		}
 		
 		@GetMapping("/cancel/{id}")
+		@Operation(summary = "Cancel Booking", description = "Cancels a booking by ID")
 		public String cancelBooking(@PathVariable int id,Model model) {
 			Optional<Bookings> busdata = bookingsRepository.findById(id);
 			if(busdata.get().isTripStatus()==false) {

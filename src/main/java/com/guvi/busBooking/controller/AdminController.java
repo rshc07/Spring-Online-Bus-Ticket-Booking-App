@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.guvi.busBooking.repository.BusDataRepository;
 import com.guvi.busBooking.repository.UserRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +23,7 @@ import com.guvi.busBooking.model.User;
 
 @Controller
 @RequestMapping("/adminScreen")
+@Tag(name = "Admin Controller", description = "Controller for managing bus data and user details")
 public class AdminController {
 	
 	@Autowired
@@ -36,6 +39,7 @@ public class AdminController {
     }
 	
 	@GetMapping
+	@Operation(summary = "Display Dashboard", description = "Displays the admin dashboard with user details")
     public String displayDashboard(Model model){
 		String user= returnUsername();
         model.addAttribute("userDetails", user);
@@ -50,6 +54,7 @@ public class AdminController {
 	}
 	
 	@PostMapping
+	@Operation(summary = "Save Bus Data", description = "Saves bus data and redirects to the admin screen")
     public String saveBusData(@ModelAttribute("busDetails") BusData busData,Model model){
 		String user= returnUsername();
         model.addAttribute("userDetails", user);
@@ -59,6 +64,7 @@ public class AdminController {
     }
 	
 	@GetMapping("/allRecords")
+	@Operation(summary = "Get All Records", description = "Retrieves all bus records and displays them")
 	public String getAllRecords(Model model){
 		List<BusData> data = busDataRepository.findAll();
 		String user= returnUsername();
@@ -67,6 +73,7 @@ public class AdminController {
 		return "allRecords";
 	}
 	@GetMapping("/delete/{id}")
+	@Operation(summary = "Delete Record", description = "Deletes a bus record by ID and redirects to all records")
 	public String getDataAfterDelete(@PathVariable int id,Model model){
 		busDataRepository.deleteById(id);
 		List<BusData> data = busDataRepository.findAll();

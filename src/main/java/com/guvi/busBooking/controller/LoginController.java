@@ -1,6 +1,8 @@
 package com.guvi.busBooking.controller;
 
 import com.guvi.busBooking.service.DefaultUserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,7 @@ import com.guvi.busBooking.DTO.UserLoginDTO;
 
 @Controller
 @RequestMapping("/login")
+@Tag(name = "Login Controller", description = "Controller for managing user login")
 public class LoginController {
 @Autowired
 	private DefaultUserService userService;
@@ -22,11 +25,13 @@ public class LoginController {
     }
     
 	@GetMapping
+	@Operation(summary = "Login Page", description = "Displays the login page")
 	public String login() {
 		return "login";
 	}
 	
 	@PostMapping
+	@Operation(summary = "Login User", description = "Logs in the user with the provided credentials")
 	public void  loginUser(@ModelAttribute("user") 
 	UserLoginDTO userLoginDTO) {
 	 userService.loadUserByUsername(userLoginDTO.getUsername());

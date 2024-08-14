@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.guvi.busBooking.repository.FeedbackRepo;
 import com.guvi.busBooking.repository.UserRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +24,7 @@ import com.guvi.busBooking.model.User;
 
 @Controller
 @RequestMapping("/feedback")
+@Tag(name = "Feedback Controller", description = "Controller for managing user feedback")
 public class FeedbackController {
 	
 	@Autowired
@@ -30,6 +33,7 @@ public class FeedbackController {
 	FeedbackRepo feedbackRepo;
 
 	@GetMapping
+	@Operation(summary = "Feedback Form", description = "Displays the feedback form with user details")
 	public String feedbackForm( Model model) {
 		FeedbackDTO dto =new FeedbackDTO();
 		dto.setEmailId(returnUsername().get("email"));
@@ -39,6 +43,7 @@ public class FeedbackController {
 		return "feedback";
 	}
 	@PostMapping
+	@Operation(summary = "Save Feedback", description = "Saves user feedback and redirects to the feedback page with success message")
 	public String saveFeedback(@ModelAttribute("feedback") FeedbackDTO feedbackDTO) {
 		Map<String , String> map= returnUsername();
     	Feedback feedback = new Feedback();
